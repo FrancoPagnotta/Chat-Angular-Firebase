@@ -15,12 +15,15 @@ export class ChatService {
   }
   
   loadMessages() {
-    this.itemsCollection = this.afs.collection<Message>('chats', ref => ref.orderBy('date','desc').limit(5));
+    this.itemsCollection = this.afs.collection<Message>('chats', ref => ref.orderBy('date','desc').limit(5)); // Si le saco el limit, me trae todos los mensajes.
     return this.itemsCollection.valueChanges()
       .pipe(
         map((messages: Message[]) => {
           console.log(messages)
-          this.chats = messages
+          this.chats = [];
+          for (let message of messages) {
+            this.chats.unshift(message); //unshift ingresa el mensaje siempre en la primera posicion del array
+          }
         })
       )
   }

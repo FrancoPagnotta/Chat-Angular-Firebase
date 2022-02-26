@@ -8,11 +8,19 @@ import { ChatService } from 'src/app/services/chat.service';
 })
 export class ChatComponent implements OnInit {
   message: string = '';
+  element: any;
 
   constructor(public chatService: ChatService) { }
 
   ngOnInit(): void {
-    this.chatService.loadMessages().subscribe();
+    this.element = document.getElementById('app-messages');
+    
+    this.chatService.loadMessages()
+      .subscribe(()=> {
+        setTimeout(() => {
+          this.element.scrollTop = this.element.scrollHeight
+        }, 20)
+      })
   }
 
   sendMessage(): void {
