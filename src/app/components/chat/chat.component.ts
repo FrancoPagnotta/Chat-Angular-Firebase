@@ -9,15 +9,20 @@ import { ChatService } from 'src/app/services/chat.service';
 export class ChatComponent implements OnInit {
   message: string = '';
 
-  constructor(private chatService: ChatService) { }
+  constructor(public chatService: ChatService) { }
 
   ngOnInit(): void {
-    this.chatService.loadMessages()
-      .subscribe(res => console.log(res))
+    this.chatService.loadMessages().subscribe();
   }
 
   sendMessage(): void {
-    console.log(this.message);
+    if (this.message.length === 0) {
+      return 
+    } else {
+      this.chatService.addMessage(this.message)
+        .then(() => this.message = '')
+        .catch((err) => console.log(err))
+    }
   }
 
 }
