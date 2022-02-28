@@ -13,7 +13,8 @@ export class ChatService {
 
   private itemsCollection!: AngularFirestoreCollection<Message>;
   public chats: Message[] = [];
-  public user!: User;
+  public user: any = {};
+
 
   constructor(private afs: AngularFirestore,
               public afauth: AngularFireAuth) {
@@ -36,6 +37,8 @@ export class ChatService {
   }
 
   logout() {
+    this.user.name = '',
+    this.user.uid = ''
     this.afauth.auth.signOut();
   }
   
